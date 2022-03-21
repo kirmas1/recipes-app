@@ -2,7 +2,9 @@ This application was developed due to Technical Case Study - Pennylane
 
 This Ruby on Rails application helps users find the most relevant recipes that they can prepare with the ingredients that they have at home.
 
-The application is based on rails 4.2 and postgresql
+The application is based on rails 4.2 and postgresql 11.14
+
+The front-end use autoComplete.js library for the ingredients search.
 
 To install the project, run the migration and the seeds
 rake db:migrate
