@@ -13,10 +13,3 @@ development:
 test:
   <<: *default
   database: recepies_test
-
-production:
-  <<: *default
-  host: ec2-54-76-249-45.eu-west-1.compute.amazonaws.com
-  database: d3i994opd21r5s
-  username: oinvycbuielvcv
-  password: 6d1926434966ccaac687880280ddd4c77add1dc65456693d950aa23744a7691f
