@@ -2,10 +2,10 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-#  host: localhost
-#  port: 5432
-#  database: recepies-app
-#  username: sagikirma
+  host: localhost
+  port: 5432
+  database: recepies-app
+  username: sagikirma
 
 development:
   <<: *default
@@ -16,3 +16,7 @@ test:
 
 production:
   <<: *default
+  host: ec2-54-76-249-45.eu-west-1.compute.amazonaws.com
+  database: d3i994opd21r5s
+  username: oinvycbuielvcv
+  password: 6d1926434966ccaac687880280ddd4c77add1dc65456693d950aa23744a7691f
