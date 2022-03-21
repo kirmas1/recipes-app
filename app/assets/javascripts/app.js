@@ -1,14 +1,14 @@
 $( document ).ready(function() {
 
-    console.log('welcome');
-
     window.myList = [];
-
+    const searchElement = document.querySelector("#autoComplete");
+    const listItems = document.querySelector(".list-items");
+    let autoCompleteJS;
     fetch('/ingredients')
         .then(response => response.json())
         .then(data => {
 
-            let autoCompleteConfig = {
+            const autoCompleteConfig = {
                 selector: "#autoComplete",
                 placeHolder: "Search for Ingredient...",
                 data: {
@@ -39,67 +39,36 @@ $( document ).ready(function() {
                 events: {
                     list: {
                         click: (event) => {
-                            console.log(`${event.target.innerText} clicked`);
-                            if (event.target.innerText.length < 2) {
-                                return false;
-                            }
-                            autoCompleteJS.close();
-                            searchElement.value = "";
-                            let e = document.createElement('div');
-                            e.classList += "list-item"
-                            e.innerText = event.target.innerText
-                            document.querySelector(".list-items").appendChild(e);
-                            myList.push(event.target.innerText);
+                            addIngredientToMyList(event.target.innerText);
                         }
                     }
                 }
             }
-            const autoCompleteJS = new autoComplete(autoCompleteConfig);
+            autoCompleteJS = new autoComplete(autoCompleteConfig);
 
-            const searchElement = document.querySelector("#autoComplete");
             searchElement.addEventListener("selection", function (event) {
-                // "event.detail" carries the autoComplete.js "feedback" object
-                if (event.detail.selection.value.length < 2) {
-                    return false;
-                }
-                console.log("selected " + event.detail.selection.value);
-                let e = document.createElement('div');
-                e.classList += "list-item"
-                e.innerText = event.detail.selection.value;
-                document.querySelector(".list-items").appendChild(e);
-                myList.push(event.detail.selection.value);
-                autoCompleteJS.close();
-                searchElement.value = "";
+                addIngredientToMyList(event.detail.selection.value);
             });
         });
 
-    window.clearList = function () {
-        myList = [];
-        document.querySelector(".list-items").innerHTML = "";
-        document.querySelector(".recipes-container").innerHTML = "";
+    const addIngredientToMyList = function(ingredient) {
+        if (ingredient.length < 2) {
+            return;
+        }
+        if (myList.includes(ingredient)) {
+            return;
+        }
+
+        let e = document.createElement('div');
+        e.classList += "list-item";
+        e.innerText = ingredient;
+        listItems.appendChild(e);
+        myList.push(ingredient);
+        autoCompleteJS.close();
+        searchElement.value = "";
     }
 
-    window.getRecipes = function () {
-        fetch("/recipes", {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer',
-            body: JSON.stringify({ingredients: myList})
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                populateRecipes(data);
-            })
-    }
-
-    function populateRecipes(data) {
+    const populateRecipes = function(data) {
         let container = document.querySelector(".recipes-container")
         data.forEach(recipe =>{
             let recipeElement = document.createElement("div");
@@ -128,6 +97,32 @@ $( document ).ready(function() {
 
 
         })
+    }
+
+    window.clearList = function () {
+        myList = [];
+        document.querySelector(".list-items").innerHTML = "";
+        document.querySelector(".recipes-container").innerHTML = "";
+    }
+
+    window.getRecipes = function () {
+        fetch("/recipes", {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify({ingredients: myList})
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                populateRecipes(data);
+            })
     }
 });
 
