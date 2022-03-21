@@ -1,3 +1,6 @@
+/*
+
+
 $( document ).ready(function() {
 
     window.myList = [];
@@ -123,4 +126,4 @@ $( document ).ready(function() {
             })
     }
 });
-
+ */
