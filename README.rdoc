@@ -1,28 +1,10 @@
-== README
+This application was developed due to Technical Case Study - Pennylane
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Ruby on Rails application helps users find the most relevant recipes that they can prepare with the ingredients that they have at home.
 
-Things you may want to cover:
+The application is based on rails 4.2 and postgresql
 
-* Ruby version
+To install the project, run the migration and the seeds
+rake db:migrate
+rake db:seed
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
