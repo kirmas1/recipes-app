@@ -10,3 +10,29 @@ To install the project, run the migration and the seeds
 rake db:migrate
 rake db:seed
 
+DB Structure:
+------
+table name: Ingredients
+
+columns:
+id: auto increment
+t.string  :name, :null => false
+add_index :ingredients, :name
+
+----
+
+table name: 
+columns:
+id: auto increment
+t.string  :author
+t.string  :category
+t.float   :cook_time
+t.string  :cuisine
+t.float   :prep_time
+t.float   :ratings
+t.string  :title
+t.string  :image
+t.string  :ingredients_desc, array: true, default: []
+t.integer :ingredients_id, array: true, default: []
+
+add_index :recipes, :ingredients_id, using: :gin
